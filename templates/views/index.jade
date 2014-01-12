@@ -1,0 +1,24 @@
+extends ../layouts/base
+
+block content
+        h3 
+            a(href='/') DOWNLOADS : Sermons
+
+        if sermons
+            block filter
+            #sermonP
+                each sermon in sermons
+                    #result
+                        div
+                            p
+                                a(href='sermon/'+sermon.slug)
+                                    if sermon.presentation.exists
+                                        img(src=sermon._.presentation.fit(200, 113).replace('.pdf', '.png'))
+                                    else
+                                        img(src='http://sermons.mottramec.co.uk/nopdf.gif')
+                            a(href='sermon/'+sermon.slug)
+                                = sermon.title
+                            br
+                            = sermon._.date.format('DD/MM/YYYY')
+                            br
+                            = sermon.speaker.name.full

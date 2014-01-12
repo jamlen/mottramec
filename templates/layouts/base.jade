@@ -1,0 +1,39 @@
+include ../mixins/flash-messages
+include ../mixins/nav
+ 
+doctype 5
+html
+    head
+        meta(charset="utf-8")
+        meta(name="viewport", content="initial-scale=1.0,user-scalable=no,maximum-scale=1,width=device-width")
+        
+        title= title || 'My Keystone Website'
+        link(rel="shortcut icon", href="/favicon.ico", type="image/x-icon")
+        link(href="/styles/site.min.css", rel="stylesheet")
+        link(href="/styles/menu.min.css", rel="stylesheet")
+        
+        block css
+        block head
+    body
+        
+        
+        #pagewidth
+            #header My Keystone Website
+            +nav
+            
+            block intro
+            
+            +flash-messages(messages)
+            
+            #wrapper.clearfix
+                #maincol
+                    block content
+        
+            p.registered
+                | MOTTRAM EVANGELICAL CHURCH IS A COMPANY LIMITED BY GUARANTEE (NUMBER 6856759) AND A REGISTERED CHARITY (NUMBER 1129418) Copyright
+                a(href='http://www.mottramec.co.uk/copywrite.html') 
+                    &copy; 2012 Mottram Evangelical Church 
+    
+    script(src='/js/lib/jquery/jquery-1.10.2.min.js')
+    
+    block js
