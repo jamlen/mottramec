@@ -8,11 +8,11 @@ block content
             a(href='/') DOWNLOADS : Sermons : 
             a(href=sermon.audio.url)
                 =sermon.title
-        a(href=sermon.presentation.url).sermonImg
-            if sermon.presentation.exists
-                img(src=sermon._.presentation.thumbnail(200).replace('.pdf', '.png'))
-            else
-                img(src='http://sermons.mottramec.co.uk/nopdf.gif')
+        if sermon.presentation.exists
+            a(href=sermon.presentation.url).sermonImg
+                img(src=sermon._.presentation.fit(200, 113).replace('.pdf', '.png'))
+        else
+            img(src='http://sermons.mottramec.co.uk/nopdf.gif')
 
         #sermonDetail
             a(href='filter.php?Preacher=Martyn Cooling') 
@@ -35,6 +35,10 @@ block content
             | Right click and select "save
             | link as" to download.
             br
+            if (sermon.studyNotes.exists)
+                | Sermon Notes:
+                a(href=sermon.studyNotes.url) PDF
+                br
             br
             audio(src=sermon.audio.url, controls='', preload='')
             br
