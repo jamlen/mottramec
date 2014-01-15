@@ -11,7 +11,7 @@ keystone.init({
   'view engine': 'jade',
   
   'auto update': true,
-  'mongo': 'mongodb://localhost/mottramec',
+  'mongo': 'mongodb://'+ (process.env.MOTTRAM_CONFIG_MONGO_CON || 'localhost')+'/mottramec',
   
   'session': true,
   'auth': true,
