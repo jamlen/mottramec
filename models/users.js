@@ -2,7 +2,7 @@ var keystone = require('keystone'),
     Types = keystone.Field.Types;
  
 var User = new keystone.List('User', {
-    autokey: { path: 'slug', from: 'name', unique: true },
+    autokey: { path: 'key', from: 'name', unique: true }
 });
  
 User.add({
@@ -11,6 +11,11 @@ User.add({
     password: { type: Types.Password, initial: true },
     canAccessKeystone: { type: Boolean, initial: true },
     groups: { type: Types.Relationship, ref: 'UserGroup', many: true }
+}, 'Profile', {
+	isPublic: Boolean,
+	photo: { type: Types.CloudinaryImage },
+	twitter: { type: String, width: 'short' },
+	bio: { type: Types.Markdown }
 });
  
 User.register();

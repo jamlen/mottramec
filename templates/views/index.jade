@@ -6,7 +6,7 @@ block content
             a(href='/') DOWNLOADS : Sermons
 
         if sermons
-            +sermon-filter(filters)
+            +sermon-filter(data, filters)
             #sermonP
                 each sermon in sermons
                     #result

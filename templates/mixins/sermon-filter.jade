@@ -1,7 +1,6 @@
-mixin sermon-filter(filters)
-	if filters
+mixin sermon-filter(data, filter)
+	if data.speakers
 		h5.text-muted Filter by Speaker
-		//- ul.list-unstyled.tags-list
-		//- 	li: a(href='/', class=!filters.active ? 'active' : false) All
-		//- 	each speaker in filters.speakers
-		//- 		li: a(href='/speakers/' + speaker.slug, class=filter.active && filter.active.slug == speaker.slug ? 'active' : false).list-group-item= speaker.name
+		ul.list-unstyled.tags-list
+			each speaker in data.speakers
+				li: a(href='/speakers/' + speaker.key, class=filter.active && filter.active.slug == speaker.slug ? 'active' : false).list-group-item= speaker.name.full + ' (' +speaker.sermonCount + ')'

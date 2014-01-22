@@ -5,7 +5,7 @@ exports = module.exports = function(req, res) {
 		
 	var view = new keystone.View(req, res),
 		locals = res.locals;
-	
+	console.log('req.params', req.params);
 	locals.section = 'sermon';
 	locals.filters = {
 		speaker: req.params.speaker
@@ -23,28 +23,39 @@ exports = module.exports = function(req, res) {
 			.where('state', 'published')
 			.sort('-date');
 
-		if (locals.data.speaker)
-			q.where('speaker').in([locals.data.speaker]);
+		// 	q.where('speaker').in([locals.filters.speaker.id]);
 
 		q.exec(function(err, results){
-			locals.data.sermons = results;
-			locals.sermons = results;
-			next(err);
+			if (locals.filters.speaker) {
+				async.filter(results, function(sermon, callback){
+					console.log(sermon.speaker.key, locals.filters.speaker);
+					callback(sermon.speaker.key === locals.filters.speaker);
+				}, function(results){
+					console.log(results);
+					locals.data.sermons = results;
+					locals.sermons = results;
+					next(err);
+				});
+			} else {
+				locals.data.sermons = results;
+				locals.sermons = results;
+				next(err);
+			}
 		});
 	});
 
 	// Load all speakers
 	view.on('init', function(next){
+		//need to find correct way of finding users in a particular group
 		keystone.list('User').model.find({groups: '52b4d2a907eb16176a000001'}).exec(function(err, results){
 			if (err || !results.length){
 				return next(err);
 			}
-			console.log(results);
 			locals.data.speakers = results;
 			async.each(locals.data.speakers, function(speaker, next){
 				keystone.list('Sermon').model.count().where('speaker').in([speaker.id]).exec(function(err, count){
 					speaker.sermonCount = count;
-					console.log('speaker.sermonCount', count);
+					console.log('speaker', speaker);
 					next(err);
 				});
 			}, function(err){
@@ -57,6 +68,7 @@ exports = module.exports = function(req, res) {
 		if (req.params.speaker){
 			keystone.list('User').model.findOne({slug: locals.filters.speaker}).exec(function(err, result){
 				locals.data.speaker = result
+				next(err);
 			});
 		} else if (req.params.book){
 
