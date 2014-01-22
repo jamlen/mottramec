@@ -1,7 +1,9 @@
 var keystone = require('keystone'),
     Types = keystone.Field.Types;
  
-var User = new keystone.List('User');
+var User = new keystone.List('User', {
+    autokey: { path: 'slug', from: 'name', unique: true },
+});
  
 User.add({
     name: { type: Types.Name, required: true, index: true },

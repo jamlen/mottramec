@@ -1,11 +1,12 @@
 extends ../layouts/base
+include ../mixins/sermon-filter
 
 block content
         h3 
             a(href='/') DOWNLOADS : Sermons
 
         if sermons
-            block filter
+            +sermon-filter(filters)
             #sermonP
                 each sermon in sermons
                     #result
@@ -18,6 +19,8 @@ block content
                                         img(src='http://sermons.mottramec.co.uk/nopdf.gif')
                             a(href='sermon/'+sermon.slug)
                                 = sermon.title
+                            br
+                            = sermon.bibleRef
                             br
                             = sermon._.date.format('DD/MM/YYYY')
                             br

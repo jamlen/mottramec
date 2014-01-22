@@ -17,7 +17,7 @@ exports = module.exports = function(req, res) {
         Sermon.model.findOne()
                 .where('state', 'published')
                 .where('slug', locals.filters.sermon)
-                .populate('series speaker')
+                .populate('series speaker bibleRefs')
                 .exec(function(err, sermon) {
                         if (err) return res.err(err);
                         if (!sermon) return res.notfound('Sermon not found');

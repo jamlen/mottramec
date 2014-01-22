@@ -19,6 +19,7 @@ keystone.set('500', function(err, req, res, next) {
         message = err.message;
         err = err.stack;
     }
+    console.log(err);
     res.err(err, title, message);
 });
  
