@@ -5,11 +5,12 @@ exports = module.exports = function(req, res) {
 		
 	var view = new keystone.View(req, res),
 		locals = res.locals;
-	console.log('req.params', req.params);
 	locals.section = 'sermon';
 	locals.filters = {
-		speaker: req.params.speaker
+		speaker: req.params.speaker,
+		active: req.params.speaker || req.params.book || req.params.series || null
 	};
+	console.log(locals)
 	locals.data = {
 		sermons: [],
 		books: [],
@@ -28,10 +29,8 @@ exports = module.exports = function(req, res) {
 		q.exec(function(err, results){
 			if (locals.filters.speaker) {
 				async.filter(results, function(sermon, callback){
-					console.log(sermon.speaker.key, locals.filters.speaker);
 					callback(sermon.speaker.key === locals.filters.speaker);
 				}, function(results){
-					console.log(results);
 					locals.data.sermons = results;
 					locals.sermons = results;
 					next(err);
@@ -55,7 +54,6 @@ exports = module.exports = function(req, res) {
 			async.each(locals.data.speakers, function(speaker, next){
 				keystone.list('Sermon').model.count().where('speaker').in([speaker.id]).exec(function(err, count){
 					speaker.sermonCount = count;
-					console.log('speaker', speaker);
 					next(err);
 				});
 			}, function(err){

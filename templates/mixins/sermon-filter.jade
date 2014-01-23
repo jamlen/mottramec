@@ -1,6 +1,9 @@
 mixin sermon-filter(data, filter)
+	if (filter.active)
+		h5.text-muted 
+			a(href='/') Clear Filter
 	if data.speakers
 		h5.text-muted Filter by Speaker
 		ul.list-unstyled.tags-list
 			each speaker in data.speakers
-				li: a(href='/speakers/' + speaker.key, class=filter.active && filter.active.slug == speaker.slug ? 'active' : false).list-group-item= speaker.name.full + ' (' +speaker.sermonCount + ')'
+				li: a(href='/speakers/' + speaker.key, class=filter.active && filter.active === speaker.key ? 'active' : false).list-group-item= speaker.name.full + ' (' +speaker.sermonCount + ')'
