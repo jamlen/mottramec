@@ -1,24 +1,33 @@
 include ../mixins/flash-messages
 include ../mixins/nav
  
-doctype 5
-html
+!!!5
+html(lang='en')
     head
         meta(charset="utf-8")
-        meta(name="viewport", content="initial-scale=1.0,user-scalable=no,maximum-scale=1,width=device-width")
+        meta(name='viewport', content='width=device-width, initial-scale=1.0')
+
         
         title= title || 'My Keystone Website'
         link(rel="shortcut icon", href="/favicon.ico", type="image/x-icon")
+        link(href="/css/yeti.bootstrap.min.css", rel="stylesheet")
+        link(href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css", rel="stylesheet")
         link(href="/styles/site.min.css", rel="stylesheet")
         link(href="/styles/menu.min.css", rel="stylesheet")
+
+        //HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries 
+        //WARNING: Respond.js doesn't work if you view the page via file:// 
+        //if lt IE 9
+            script(src='https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js')
+            script(src='https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js')
         
         block css
         block head
     body
         
-        
+        //- .container
         #pagewidth
-            #header My Keystone Website
+            #header
             +nav
             
             block intro
@@ -34,6 +43,7 @@ html
                 a(href='http://www.mottramec.co.uk/copywrite.html') 
                     &copy; 2012 Mottram Evangelical Church 
     
-    script(src='/js/lib/jquery/jquery-1.10.2.min.js')
+    script(src='https://code.jquery.com/jquery.js')
+    script(src='/js/bootstrap.min.js')
     
     block js
