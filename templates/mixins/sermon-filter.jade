@@ -23,3 +23,11 @@ mixin sermon-filter(data, filter)
 						= speaker.name.full
 						abbr(title=speaker.sermonCount+' sermons by '+speaker.name.first)
 							span.count=speaker.sermonCount
+
+	if data.books
+		#dd.wrapper-dropdown-2 Books
+			ul.dropdown
+				each book in data.books
+					li: a(href='/books/' + book, class=filter.active && filter.active === book ? 'active' : false)
+						i.fa.fa-book.fa-fw
+						= book

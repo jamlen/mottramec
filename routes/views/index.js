@@ -1,5 +1,6 @@
 var keystone = require('keystone'),
-	async = require('async');
+	async = require('async'),
+	_ = require('lodash');
 
 exports = module.exports = function(req, res) {
 		
@@ -9,6 +10,7 @@ exports = module.exports = function(req, res) {
 	locals.filters = {
 		speaker: req.params.speaker,
 		series: req.params.series,
+		book: req.params.book,
 		active: req.params.speaker || req.params.book || req.params.series || null
 	};
 	console.log(locals)
@@ -35,6 +37,14 @@ exports = module.exports = function(req, res) {
 			} else if (locals.filters.series) {
 				async.filter(results, function(sermon, callback){
 					callback(sermon.series && sermon.series.slug === locals.filters.series);
+				}, function(results){
+					locals.data.sermons = results;
+					locals.sermons = results;	
+					next(err);
+				});
+			} else if (locals.filters.book) {
+				async.filter(results, function(sermon, callback){
+					callback(_.contains(sermon.bibleRefs, locals.filters.book));
 				}, function(results){
 					locals.data.sermons = results;
 					locals.sermons = results;	
@@ -69,7 +79,6 @@ exports = module.exports = function(req, res) {
 	
 	// Load all series
 	view.on('init', function(next){
-		//need to find correct way of finding users in a particular group
 		keystone.list('Series').model.find().exec(function(err, results){
 			if (err || !results.length){
 				return next(err);
@@ -85,6 +94,37 @@ exports = module.exports = function(req, res) {
 			})
 		});
 	});
+
+	// Load all books
+	view.on('init', function(next){
+		keystone.list('Sermon').model.find()
+			.populate('bibleRefs')
+			.exec(function(err, results){
+			if (err || !results.length){
+				return next(err);
+			}
+
+			var books = _.chain(results)
+				.map(function(sermon){ return sermon.bibleRefs })
+				.flatten()
+				.map(function(ref){ return ref.book })
+				.uniq()
+				.value();
+			console.log(books);
+			locals.data.books = books;
+			next(err);
+			// async.each(results, function(sermon, next){
+
+			// 	locals.data.books = results;
+			// 	keystone.list('Sermon').model.count().where('series').in([series.id]).exec(function(err, count){
+			// 		series.sermonCount = count;
+			// 		next(err);
+			// 	});
+			// }, function(err){
+			// 	next(err);
+			// })
+		});
+	});
 	
 	view.on('init', function(next){
 		if (req.params.speaker){
@@ -93,7 +133,7 @@ exports = module.exports = function(req, res) {
 				next(err);
 			});
 		} else if (req.params.book){
-
+			next();
 		} else {
 			next();
 		}

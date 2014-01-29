@@ -13,6 +13,8 @@ Verse.add({
     verse: { type: Number, required: true },
 });
 
+Verse.relationship({ path: 'sermons', ref: 'Sermon', refPath: 'bibleRefs'});
+
 Verse.schema.virtual('format').get(function() {
     return this.book +' '+ this.chapter + ':'+ this.verse;
 });
