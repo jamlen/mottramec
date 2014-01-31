@@ -20,8 +20,9 @@ block content
                         a(href='sermon/'+sermon.slug)
                             = sermon.title
                         br
-                        = sermon.bibleRef
-                        br
+                        if sermon.bibleRef
+                            = sermon.bibleRef
+                            br
                         = sermon._.date.format('DD/MM/YYYY')
                         br
                         = sermon.speaker.name.full

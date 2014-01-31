@@ -35,5 +35,10 @@ keystone.init({
 require('./models');
  
 keystone.set('routes', require('./routes'));
+keystone.set('nav', {
+  'users': 'users',
+  'sermons': 'sermons',
+  'others': ['user-groups', 'series', 'verses']
+});
  
 keystone.start();
