@@ -13,5 +13,8 @@
   },
   "scripts": {
     "start": "web.js"
-  }
+  },
+  "bundledDependencies": [
+    "keystone"
+  ]
 }
