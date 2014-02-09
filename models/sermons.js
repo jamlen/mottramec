@@ -1,5 +1,5 @@
 var keystone = require('keystone'),
-    _ = require('underscore'),
+    _ = require('lodash'),
     util = require('util'),
     async = require('async'),
     Types = keystone.Field.Types;
