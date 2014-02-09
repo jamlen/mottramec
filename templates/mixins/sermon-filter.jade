@@ -1,33 +1,33 @@
 mixin sermon-filter(data, filter)
-	h4 Filter by 
+	//- h4 Filter by 
 	if filter.active
 		h5.text-muted 
 			a(href='/') Clear Filter
 
-	if data.series
-		#dd.wrapper-dropdown-2 Series
-			ul.dropdown
-				each series in data.series
-					li: a(href='/series/'+ series.slug, class=filter.active && filter.active === series.slug ? 'active' : false)
-						i.fa.fa-bars.fa-fw
-						= series.name
-						abbr(title=series.sermonCount+' sermons in '+series.name)
-							span.count=series.sermonCount	
+	//- if data.series
+	//- 	#dd.wrapper-dropdown-2 Series
+	//- 		ul.dropdown
+	//- 			each series in data.series
+	//- 				li: a(href='/series/'+ series.slug, class=filter.active && filter.active === series.slug ? 'active' : false)
+	//- 					i.fa.fa-bars.fa-fw
+	//- 					= series.name
+	//- 					abbr(title=series.sermonCount+' sermons in '+series.name)
+	//- 						span.count=series.sermonCount	
 
-	if data.speakers
-		#dd.wrapper-dropdown-2 Speaker
-			ul.dropdown
-				each speaker in data.speakers
-					li: a(href='/speakers/' + speaker.key, class=filter.active && filter.active === speaker.key ? 'active' : false)
-						i.fa.fa-user.fa-fw
-						= speaker.name.full
-						abbr(title=speaker.sermonCount+' sermons by '+speaker.name.first)
-							span.count=speaker.sermonCount
+	//- if data.speakers
+	//- 	#dd.wrapper-dropdown-2 Speaker
+	//- 		ul.dropdown
+	//- 			each speaker in data.speakers
+	//- 				li: a(href='/speakers/' + speaker.key, class=filter.active && filter.active === speaker.key ? 'active' : false)
+	//- 					i.fa.fa-user.fa-fw
+	//- 					= speaker.name.full
+	//- 					abbr(title=speaker.sermonCount+' sermons by '+speaker.name.first)
+	//- 						span.count=speaker.sermonCount
 
-	if data.books
-		#dd.wrapper-dropdown-2 Books
-			ul.dropdown
-				each book in data.books
-					li: a(href='/books/' + book, class=filter.active && filter.active === book ? 'active' : false)
-						i.fa.fa-book.fa-fw
-						= book
+	//- if data.books
+	//- 	#dd.wrapper-dropdown-2 Books
+	//- 		ul.dropdown
+	//- 			each book in data.books
+	//- 				li: a(href='/books/' + book, class=filter.active && filter.active === book ? 'active' : false)
+	//- 					i.fa.fa-book.fa-fw
+	//- 					= book

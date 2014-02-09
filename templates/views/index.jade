@@ -6,18 +6,18 @@ block content
         a(href='/') DOWNLOADS : Sermons
 
     if sermons
-        //- +sermon-filter(data, filters)
+        +sermon-filter(data, filters)
         #sermonP
             each sermon in sermons
                 #result
                     div
                         p
-                            a(href='sermon/'+sermon.slug)
+                            a(href='/sermon/'+sermon.slug)
                                 if sermon.presentation.exists
                                     img(src=sermon._.presentation.fit(200, 113).replace('.pdf', '.png'))
                                 else
                                     img(src='http://sermons.mottramec.co.uk/nopdf.gif')
-                        a(href='sermon/'+sermon.slug)
+                        a(href='/sermon/'+sermon.slug)
                             = sermon.title
                         br
                         if sermon.bibleRef

@@ -15,12 +15,12 @@ block content
             img(src='http://sermons.mottramec.co.uk/nopdf.gif')
 
         #sermonDetail
-            a(href='filter.php?Preacher=Martyn Cooling') 
+            a(href='/speakers/'+ sermon.speaker.key) 
                 =sermon.speaker.name.full
             br
             if sermon.series
                 | Series: 
-                a(href='filter.php?series=Needs+detail')
+                a(href='/series/'+ sermon.series.slug)
                     =sermon.series.name
                 br
             br
