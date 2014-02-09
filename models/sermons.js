@@ -1,6 +1,7 @@
 var keystone = require('keystone'),
     _ = require('underscore'),
     util = require('util'),
+    async = require('async'),
     Types = keystone.Field.Types;
 
 var Sermon = new keystone.List('Sermon', {
@@ -27,17 +28,26 @@ Sermon.fields.audio.pre('upload', function(item, file, next) {
     console.log('pre.upload');
     var exec = require('child_process').exec;
     var fmt = 'id3v2 -a "Mottram Evangelical Church" --TCOM "%s" -A "MEC - %s" -y %d -t "%s" -g 101 --TCOP "Copyright 2013 Mottram Evangelical Church" %s';
-    keystone.list('User').model.findById(item.speaker, function(err, speaker) {
-        keystone.list('Series').model.findById(item.series, function(err, series) {
 
-            var cmd = util.format(fmt, speaker.name.full, series.name, item._.date.format('YYYY'), item.title, file.path);
-            console.log('Updating ID3 tags.');
-            exec(cmd, function(err, stdout, stderr){ 
-                if (err !== null) {
-                  console.log('Failed to set ID3 tags', err);
-                }
-                next();
+    async.parallel({
+        speaker: function(callback){
+            keystone.list('User').model.findById(item.speaker, function(err, speaker) {
+                callback(err, speaker);
             });
+        },
+        series: function(callback){
+            keystone.list('Series').model.findById(item.series, function(err, series) {
+                callback(err, series);
+            });
+        }
+    }, function(err, results){
+        var cmd = util.format(fmt, results.speaker.name.full, results.series.name, item._.date.format('YYYY'), item.title, file.path);
+        console.log('Updating ID3 tags.');
+        exec(cmd, function(err, stdout, stderr){ 
+            if (err !== null) {
+              console.log('Failed to set ID3 tags', err);
+            }
+            next(err);
         });
     });
 });

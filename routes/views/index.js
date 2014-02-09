@@ -109,6 +109,7 @@ exports = module.exports = function(req, res) {
 				.flatten()
 				.map(function(ref){ return ref.book })
 				.uniq()
+				// .map(function(ref){ return bibleBooks[osisID] })
 				.value();
 			console.log(books);
 			locals.data.books = books;
