@@ -1,3 +1,6 @@
+var config = require('./config/site');
+if (config === null) throw new Error('Site requires config.');
+
 var keystone = require('keystone');
 keystone.init({
   
@@ -12,22 +15,22 @@ keystone.init({
   
   'auto update': true,
   // 'mongo': 'mongodb://localhost/mottramec',
-  'mongo': 'mongodb://'+ (process.env.MOTTRAM_CONFIG_MONGO_CON || 'localhost')+'/mottramec',
+  'mongo': 'mongodb://'+ (config.mottramConfigMongoCon || 'localhost')+'/mottramec',
   
   'session': true,
   'auth': true,
   'user model': 'User',
-  'cookie secret': process.env.MOTTRAM_CONFIG_COOKIE_SECRET,
+  'cookie secret': config.mottramConfigCookieSecret,
 
   's3 config': {
-    'key'    : process.env.MOTTRAM_CONFIG_S3_KEY,
-    'secret' : process.env.MOTTRAM_CONFIG_S3_SECRET,
+    'key'    : config.mottramConfigS3Key,
+    'secret' : config.mottramConfigS3Secret,
     'bucket' : 'mottramec'
   },
   'cloudinary config': {
     'cloud_name' : 'jamlen',
-    'api_key'    : process.env.MOTTRAM_CONFIG_CLOUDINARY_KEY,
-    'api_secret' : process.env.MOTTRAM_CONFIG_CLOUDINARY_SECRET
+    'api_key'    : config.mottramConfigCloudinaryKey,
+    'api_secret' : config.mottramConfigCloudinarySecret
   }
   
 });

@@ -22,7 +22,6 @@ exports = module.exports = function(req, res) {
                         if (err) return res.err(err);
                         if (!sermon) return res.notfound('Sermon not found');
                         locals.sermon = sermon;
-                        console.log(sermon);
                         next();
                 });
 

@@ -13,9 +13,7 @@ exports = module.exports = function(req, res) {
 		book: req.params.book,
 		active: req.params.speaker || req.params.book || req.params.series || null
 	};
-	console.log(locals)
-	locals.data = {
-	};
+	locals.data = {};
 	
 	view.on('init', function(next){
 		var q = keystone.list('Sermon').model.find()
@@ -23,7 +21,7 @@ exports = module.exports = function(req, res) {
 			.where('state', 'published')
 			.sort('-date');
 
-		// 	q.where('speaker').in([locals.filters.speaker.id]);
+		// q.where('speaker').in([locals.filters.speaker.id]);
 
 		q.exec(function(err, results){
 			if (locals.filters.speaker) {
@@ -111,7 +109,6 @@ exports = module.exports = function(req, res) {
 				.uniq()
 				// .map(function(ref){ return bibleBooks[osisID] })
 				.value();
-			console.log(books);
 			locals.data.books = books;
 			next(err);
 			// async.each(results, function(sermon, next){
