@@ -1,5 +1,8 @@
 .git
-npm-debug.log
+*.log
+*.pid
+*.lock
 *.tgz
+
 tmp/
 config/

@@ -4,8 +4,8 @@ lib-cov
 *.csv
 *.dat
 *.out
-*.pid
 *.gz
+*.pid
 *.lock
 *.tgz
 
@@ -15,5 +15,4 @@ results
 config
 tmp
 
-npm-debug.log
 node_modules

@@ -59,5 +59,5 @@ Sermon.schema.virtual('bibleRef').get(function() {
 
 
 
-Sermon.defaultColumns = 'date|10%, title, speaker|15%, series, state|10%'
+Sermon.defaultColumns = 'date|11%, title, speaker|15%, series, state|8%';
 Sermon.register();

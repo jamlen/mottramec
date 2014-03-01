@@ -3,7 +3,10 @@ var keystone = require('keystone'),
  
 var Verse = new keystone.List('Verse', {
 	autoKey: { path: 'slug', from: 'osis', unique: true },
-	map: { name: 'osis' }
+	map: { name: 'osis' },
+    noedit: true,
+    nocreate: true,
+    nodelete: true
 });
  
 Verse.add({
