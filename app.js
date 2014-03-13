@@ -1,10 +1,13 @@
 var config = require('./config/site');
 if (config === null) throw new Error('Site requires config.');
 
+// var tungus = require('tungus');
+
 var keystone = require('keystone');
 keystone.init({
   
   'name': 'Mottram Evangelical Church',
+  'brand': 'Mottram Evangelical Church',
   
   'favicon': 'public/favicon.ico',
   'less': 'public',
@@ -14,6 +17,7 @@ keystone.init({
   'view engine': 'jade',
   
   'auto update': true,
+  // 'mongo': 'tingodb://'+__dirname+'/db/mottramec',
   // 'mongo': 'mongodb://localhost/mottramec',
   'mongo': 'mongodb://'+ (config.mottramConfigMongoCon || 'localhost')+'/mottramec',
   
@@ -39,9 +43,8 @@ require('./models');
  
 keystone.set('routes', require('./routes'));
 keystone.set('nav', {
-  'users': 'users',
-  'sermons': 'sermons',
-  'others': ['user-groups', 'series', 'verses']
+  'Sermons': ['sermons', 'series'],
+  'Users': ['users', 'user-groups']
 });
  
 keystone.start();

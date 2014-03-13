@@ -98,20 +98,25 @@ var verses = get_intermediate_verses("Gen.1.1", "Rev.22.22");
 
 
 function createVerse(verseRef, done) {
-	console.log('processing ', verseRef)
 	Verse.model.findOne({ osis: verseRef }).exec(function(err, v) {
+    if (v) {
+      console.log('verse exists', v.osis);
+      done();
+      return;
+    }
 		var newV = new Verse.model();
 		newV.osis = verseRef;
 		var vs = verseRef.split('.');
 		newV.book = vs[0];
 		newV.chapter = vs[1];
 		newV.verse = vs[2];
-		newV.save(function(err) {
+    newV.bookOrder = book_order.indexOf(newV.book);
+		newV.save(function(err, obj) {
 			if (err) {
 				console.error("Error adding verse " + verseRef + " to the database:");
 				console.error(err);
 			} else {
-				console.log("Added verse " + verseRef + " to the database.");
+				console.log("Added verse " + obj.osis + " to the database.");
 			}
 			done();
 		});
