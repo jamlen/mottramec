@@ -6,7 +6,9 @@ var Series = new keystone.List('Series', {
 });
  
 Series.add({
-    name: { type: String, required: true, index: true }
+    name: { type: String, required: true, index: true },
+    image: { type: Types.CloudinaryImage, collapse: true },
+    synopsis: { type: Types.Html, wysiwyg: true, collapse: true, height: 400 }
 });
  
 Series.register();

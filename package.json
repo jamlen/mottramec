@@ -1,11 +1,13 @@
 {
   "name": "mottramec-site",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "private": true,
   "dependencies": {
     "keystone": "latest",
     "lodash": "latest",
-    "async": "~0.2.9"
+    "async": "~0.2.9",
+    "tingodb": "~0.2.1",
+    "tungus": "0.0.2"
   },
   "engines": {
     "node": "0.10.x",

@@ -16,7 +16,7 @@ Sermon.add({
     speaker: { type: Types.Relationship, ref: 'User'}, //, filters: {groups: true} },
     series: { type: Types.Relationship, ref: 'Series' },
     bibleRefs: { type: Types.Relationship, ref: 'Verse', many: true, label: 'Primary Verses' },
-    date: { type: Types.Date, default: Date.now },
+    date: { type: Types.Date, default: Date.now, initial: true, format: 'YYYY-MM-DD' },
     audio: { type: Types.S3File, collapse: true, allowedTypes:['audio/mp4', 'audio/mp3'] },
     presentation: { type: Types.CloudinaryImage, collapse: true, allowedTypes:['application/pdf'] },
     studyNotes: { type: Types.S3File, collapse: true, allowedTypes:['application/pdf'] },

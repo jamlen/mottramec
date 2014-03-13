@@ -3,11 +3,19 @@ var keystone = require('keystone'),
  
 exports = module.exports = function(done) {
     
-    new User.model({
-        name: { first: 'James', last: 'Allen' },
-        email: 'james@mottramec.co.uk',
-        password: 'admin',
-        canAccessKeystone: true
-    }).save(done);
+
+    User.model.findOne({ email: 'james@mottramec.co.uk' }).exec(function(err, user) {
+        if (user) {
+            console.log('Admin exists', user.email);
+            done();
+            return;
+        }
+        new User.model({
+            name: { first: 'James', last: 'Allen' },
+            email: 'james@mottramec.co.uk',
+            password: 'admin',
+            canAccessKeystone: true
+        }).save(done);
+    });
     
 };

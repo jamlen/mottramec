@@ -20,6 +20,9 @@ block content
                         a(href='/sermon/'+sermon.slug)
                             = sermon.title
                         br
+                        if sermon.series
+                            = sermon.series.name
+                            br
                         if sermon.bibleRef
                             = sermon.bibleRef
                             br
