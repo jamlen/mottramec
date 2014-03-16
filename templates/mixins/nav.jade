@@ -1,11 +1,22 @@
 mixin nav
-  #menubox
-      ul#navmenu-h
+  .navbar.navbar-inverse.navbar-static-top(role='navigation')
+    .container
+      .navbar-header
+        button.navbar-toggle(type='button', data-toggle='collapse', data-target='.navbar-collapse')
+          span.sr-only Toggle navigation
+          span.icon-bar
+          span.icon-bar
+          span.icon-bar
+        a.sr-only.navbar-brand(href='#') Mottram Evangelical Church
+      .navbar-collapse.collapse
+        ul.nav.navbar-nav
           li
             a(href='http://www.mottramec.co.uk/index.htm') Home
-          li
-            a(href='http://www.mottramec.co.uk/a-intro.htm') About us
-            ul
+          li.dropdown
+            a.dropdown-toggle(href='#', data-toggle='dropdown')
+              | About Us
+              b.caret
+            ul.dropdown-menu
               li
                 a(href='http://www.mottramec.co.uk/a-history.htm') History
               li
@@ -16,33 +27,41 @@ mixin nav
                 a(href='http://www.mottramec.co.uk/a-vision.htm') Values and Vision
               li
                 a(href='http://www.mottramec.co.uk/a-safe.htm') Safeguarding policy
-          li
-            a(href='http://www.mottramec.co.uk/activities.htm') Activities
-            ul
+          li.dropdown
+            a.dropdown-toggle(href='#', data-toggle='dropdown')
+              | Activities
+              b.caret
+            ul.dropdown-menu
               li
                 a(href='http://www.mottramec.co.uk/sunday_morning.html') Sunday Morning
               li
                 a(href='http://www.mottramec.co.uk/christianityexplored.php') Christianity Explored
               li
-                a(href='http://www.mottramec.co.uk/ac-ypg.htm') Children & Youth
+                a(href='http://www.mottramec.co.uk/ac-smallgrp.htm') Small Groups
+              li.divider
+              li.dropdown-header Youth
+              li
+                a(href='http://www.mottramec.co.uk/ac-ypg.htm') Children &amp; Youth
               li
                 a(href='http://www.mottramec.co.uk/a-ish.html') 18 - 25 (ISH)
-              li
-                a(href='http://www.mottramec.co.uk/ac-smallgrp.htm') Small Groups
+              li.divider
+              li.dropdown-header Community
               li
                 a(href='http://www.mottramec.co.uk/ac-clubt.htm') Tuesday Café
               li
+                a(href='#') Monday Matinee
+              li
                 a(href='http://www.mottramec.co.uk/ac-clubw.htm') Walking
               li
-                a(href='http://www.mottramec.co.uk/ac-cpark.htm') Annual Events
-              li
-                a(href='http://www.mottramec.co.uk/ac-whenwherewho.html') When, Where and Who?
+                a(href='http://www.mottramec.co.uk/ac-cpark.htm') Church in the Park
           li
             a(href='http://www.mottramec.co.uk/diary.php') Diary
-          li
-            a(href='http://www.mottramec.co.uk/downloads.php') Downloads
-            ul
-              li
+          li.dropdown.active
+            a.dropdown-toggle(href='#', data-toggle='dropdown')
+              | Downloads
+              b.caret
+            ul.dropdown-menu
+              li.active
                 a(href='http://sermons.mottramec.co.uk/index.php') Sermons
               li
                 a(href='http://insight.mottramec.co.uk/index.php') Monthly Magazine
@@ -56,3 +75,10 @@ mixin nav
             a(href='http://www.mottramec.co.uk/links.htm') Links
           li
             a(href='http://www.mottramec.co.uk/Mission.htm') Missions
+
+  ul.breadcrumb(style="margin-bottom: 5px; margin-top: 10px")
+    li
+      a(href="#") Home
+    li
+      a(href="#") Downloads
+    li.active Sermons

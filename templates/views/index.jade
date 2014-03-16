@@ -3,58 +3,23 @@ include ../mixins/sermon-filter
 
 block content
     h3 
-        a(href='/') DOWNLOADS : Sermons
+        a(href='/') Sermons
 
     if sermons
-        +sermon-filter(data, filters)
-        #sermonP
-            each sermon in sermons
-                #result
-                    div
-                        p
-                            a(href='/sermon/'+sermon.slug)
-                                if sermon.presentation.exists
-                                    img(src=sermon._.presentation.fit(200, 113).replace('.pdf', '.png'))
-                                else
-                                    img(src='http://sermons.mottramec.co.uk/nopdf.gif')
-                        a(href='/sermon/'+sermon.slug)
-                            = sermon.title
-                        br
-                        if sermon.series
-                            = sermon.series.name
-                            br
-                        if sermon.bibleRef
-                            = sermon.bibleRef
-                            br
-                        = sermon._.date.format('DD/MM/YYYY')
-                        br
-                        = sermon.speaker.name.full
-
-block js
-    script.
-        function DropDown(el) {
-            this.dd = el;
-            this.initEvents();
-        }
-        DropDown.prototype = {
-            initEvents : function() {
-                var obj = this;
-
-                obj.dd.on('click', function(event){
-                    $(this).toggleClass('active');
-                    event.stopPropagation();
-                }); 
-            }
-        }
-
-        $(function() {
-
-            var dd = new DropDown( $('.wrapper-dropdown-2') );
-
-            $(document).click(function() {
-                // all dropdowns
-                $('.wrapper-dropdown-2').removeClass('active');
-            });
-
-        });
-
+        .container
+            .row
+                +sermon-filter(data, filters)
+                .col-md-9
+                    each val, index in sermons
+                        if (index % 3 == 0)
+                            .row
+                                each sermon, index2 in sermons.slice(index, index+3)
+                                    .col-md-4
+                                        if sermon.presentation.exists
+                                            img.img-responsive(src=sermon._.presentation.fit(200, 113).replace('.pdf', '.png'))
+                                        else
+                                            img.img-responsive(src='http://sermons.mottramec.co.uk/nopdf.gif')
+                                        .caption
+                                            a(href='/sermon/'+sermon.slug)
+                                                h4
+                                                    =sermon.title

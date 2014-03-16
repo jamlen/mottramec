@@ -1,6 +1,6 @@
 include ../mixins/flash-messages
 include ../mixins/nav
- 
+doctype html 
 html(lang='en')
     head
         meta(charset="utf-8")
@@ -11,8 +11,8 @@ html(lang='en')
         link(rel="shortcut icon", href="/favicon.ico", type="image/x-icon")
         link(href="/css/yeti.bootstrap.min.css", rel="stylesheet")
         link(href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css", rel="stylesheet")
-        link(href="/styles/site.min.css", rel="stylesheet")
-        link(href="/styles/menu.min.css", rel="stylesheet")
+        //- link(href="/styles/site.min.css", rel="stylesheet")
+        //- link(href="/styles/menu.min.css", rel="stylesheet")
 
         //HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries 
         //WARNING: Respond.js doesn't work if you view the page via file:// 
@@ -23,20 +23,14 @@ html(lang='en')
         block css
         block head
     body
-        
-        //- .container
-        #pagewidth
-            #header
+        .container
             +nav
-            
             block intro
-            
+                
             +flash-messages(messages)
             
-            #wrapper.clearfix
-                #maincol
-                    block content
-        
+            block content
+            
             p.registered
                 | MOTTRAM EVANGELICAL CHURCH IS A COMPANY LIMITED BY GUARANTEE (NUMBER 6856759) AND A REGISTERED CHARITY (NUMBER 1129418) Copyright
                 a(href='http://www.mottramec.co.uk/copywrite.html') 

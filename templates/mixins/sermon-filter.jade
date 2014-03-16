@@ -1,33 +1,62 @@
 mixin sermon-filter(data, filter)
-	//- h4 Filter by 
-	if filter.active
-		h5.text-muted 
-			a(href='/') Clear Filter
+    //- h4 Filter by 
+    if filter.active
+        h5.text-muted 
+            a(href='/') Clear Filter
 
-	//- if data.series
-	//- 	#dd.wrapper-dropdown-2 Series
-	//- 		ul.dropdown
-	//- 			each series in data.series
-	//- 				li: a(href='/series/'+ series.slug, class=filter.active && filter.active === series.slug ? 'active' : false)
-	//- 					i.fa.fa-bars.fa-fw
-	//- 					= series.name
-	//- 					abbr(title=series.sermonCount+' sermons in '+series.name)
-	//- 						span.count=series.sermonCount	
+    .col-md-3
+        #filter.panel-group
+            if data.series
+                .panel.panel-primary
+                    .panel-heading
+                        h3.panel-title 
+                            a(data-toggle='collapse' data-parent='#filter' href='#series')
+                                | Filter by Series
+                    #series.panel-collapse.collapse
+                        .panel-body
 
-	//- if data.speakers
-	//- 	#dd.wrapper-dropdown-2 Speaker
-	//- 		ul.dropdown
-	//- 			each speaker in data.speakers
-	//- 				li: a(href='/speakers/' + speaker.key, class=filter.active && filter.active === speaker.key ? 'active' : false)
-	//- 					i.fa.fa-user.fa-fw
-	//- 					= speaker.name.full
-	//- 					abbr(title=speaker.sermonCount+' sermons by '+speaker.name.first)
-	//- 						span.count=speaker.sermonCount
+                            ul.list-group
+                                each series in data.series
+                                    li.list-group-item
+                                        span.badge 
+                                            = series.sermonCount
+                                        a(href='/series/'+ series.slug, class=filter.active && filter.active === series.slug ? 'active' : false)
+                                            = series.name
 
-	//- if data.books
-	//- 	#dd.wrapper-dropdown-2 Books
-	//- 		ul.dropdown
-	//- 			each book in data.books
-	//- 				li: a(href='/books/' + book, class=filter.active && filter.active === book ? 'active' : false)
-	//- 					i.fa.fa-book.fa-fw
-	//- 					= book
+            if data.speakers
+                .panel.panel-primary
+                    .panel-heading
+                        h3.panel-title 
+                            a(data-toggle='collapse' data-parent='#filter' href='#speakers')
+                                | Filter by Speaker
+                    #speakers.panel-collapse.collapse
+                        .panel-body
+
+                            ul.list-group
+                                each speaker in data.speakers
+                                    li.list-group-item
+                                        span.badge 
+                                            = speaker.sermonCount
+                                        a(href='/speakers/'+ speaker.key, class=filter.active && filter.active === speaker.key ? 'active' : false)
+                                            = speaker.name.full
+
+            if data.books
+                .panel.panel-primary
+                    .panel-heading
+                        h3.panel-title 
+                            a(data-toggle='collapse' data-parent='#filter' href='#books')
+                                | Filter byBook
+                    #books.panel-collapse.collapse
+                        .panel-body
+
+                            ul.list-group
+                                each book in data.books
+                                    li.list-group-item
+                                        a(href='/books/'+ book, class=filter.active && filter.active === book ? 'active' : false)
+                                            = book
+    //-     #dd.wrapper-dropdown-2 Books
+    //-         ul.dropdown
+    //-             each book in data.books
+    //-                 li: a(href='/books/' + book, class=filter.active && filter.active === book ? 'active' : false)
+    //-                     i.fa.fa-book.fa-fw
+    //-                     = book
