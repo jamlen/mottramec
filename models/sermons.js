@@ -13,8 +13,8 @@ var Sermon = new keystone.List('Sermon', {
 Sermon.add({
     title: { type: String, required: true },
     state: { type: Types.Select, options: 'draft, published, archived', default: 'draft' },
-    speaker: { type: Types.Relationship, ref: 'User'}, //, filters: {groups: true} },
-    series: { type: Types.Relationship, ref: 'Series' },
+    speaker: { type: Types.Relationship, initial: true, ref: 'User'}, //, filters: {groups: true} },
+    series: { type: Types.Relationship, initial: true, ref: 'Series' },
     bibleRefs: { type: Types.Relationship, ref: 'Verse', many: true, label: 'Primary Verses' },
     date: { type: Types.Date, default: Date.now, initial: true, format: 'YYYY-MM-DD' },
     audio: { type: Types.S3File, collapse: true, allowedTypes:['audio/mp4', 'audio/mp3'] },
@@ -40,7 +40,7 @@ Sermon.fields.audio.pre('upload', function(item, file, next) {
             });
         }
     }, function(err, results){
-        var cmd = util.format(fmt, results.speaker.name.full, results.series.name, item._.date.format('YYYY'), item.title, file.path);
+        var cmd = util.format(fmt, results.speaker.name.full, results.series ? results.series.name : 'Guest Speakers', item._.date.format('YYYY'), item.title, file.path);
         console.log('Updating ID3 tags.', cmd);
         exec(cmd, function(err, stdout, stderr){
             console.log(stdout, stderr);

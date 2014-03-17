@@ -6,9 +6,9 @@ var UserGroup = new keystone.List('UserGroup', {
 });
  
 UserGroup.add({
-    name: { type: String, required: true, index: true }
+    name: { type: String, required: true, index: true },
 });
 
-UserGroup.relationship({ ref: 'User', path: 'groups' });
+UserGroup.relationship({ path: 'users', ref: 'User', refPath: 'groups' });
  
 UserGroup.register();

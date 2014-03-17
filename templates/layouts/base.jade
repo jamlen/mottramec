@@ -1,5 +1,6 @@
 include ../mixins/flash-messages
 include ../mixins/nav
+include ../mixins/footer
 doctype html 
 html(lang='en')
     head
@@ -23,18 +24,15 @@ html(lang='en')
         block css
         block head
     body
-        .container
-            +nav
-            block intro
+        .wrap
+            .container
+                +nav
+                block intro
+                    
+                +flash-messages(messages)
                 
-            +flash-messages(messages)
-            
-            block content
-            
-            p.registered
-                | MOTTRAM EVANGELICAL CHURCH IS A COMPANY LIMITED BY GUARANTEE (NUMBER 6856759) AND A REGISTERED CHARITY (NUMBER 1129418) Copyright
-                a(href='http://www.mottramec.co.uk/copywrite.html') 
-                    | &copy; 2012 Mottram Evangelical Church 
+                block content
+        +footer            
     
     script(src='https://code.jquery.com/jquery.js')
     script(src='/js/bootstrap.min.js')

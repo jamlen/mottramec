@@ -14,6 +14,7 @@ exports = module.exports = function(req, res) {
 		active: req.params.speaker || req.params.book || req.params.series || null
 	};
 	locals.data = {};
+	locals.messages = {info: [{title: 'test 123'}]};
 	
 	view.on('init', function(next){
 		var q = keystone.list('Sermon').model.find()
@@ -65,7 +66,7 @@ exports = module.exports = function(req, res) {
 			}
 			locals.data.speakers = results;
 			async.each(locals.data.speakers, function(speaker, next){
-				keystone.list('Sermon').model.count().where('speaker').in([speaker.id]).exec(function(err, count){
+				keystone.list('Sermon').model.count().where('state', 'published').where('speaker').in([speaker.id]).exec(function(err, count){
 					speaker.sermonCount = count;
 					next(err);
 				});
@@ -83,7 +84,7 @@ exports = module.exports = function(req, res) {
 			}
 			locals.data.series = results;
 			async.each(locals.data.series, function(series, next){
-				keystone.list('Sermon').model.count().where('series').in([series.id]).exec(function(err, count){
+				keystone.list('Sermon').model.count().where('state', 'published').where('series').in([series.id]).exec(function(err, count){
 					series.sermonCount = count;
 					next(err);
 				});
@@ -114,7 +115,7 @@ exports = module.exports = function(req, res) {
 			// async.each(results, function(sermon, next){
 
 			// 	locals.data.books = results;
-			// 	keystone.list('Sermon').model.count().where('series').in([series.id]).exec(function(err, count){
+			// 	keystone.list('Sermon').model.count().where('state', 'published').where('series').in([series.id]).exec(function(err, count){
 			// 		series.sermonCount = count;
 			// 		next(err);
 			// 	});
@@ -135,6 +136,12 @@ exports = module.exports = function(req, res) {
 		} else {
 			next();
 		}
+	});
+
+	view.on('init', function(next){
+		locals.data.series = _.sortBy(_.filter(locals.data.series, 'sermonCount'), 'sermonCount').reverse();
+		locals.data.speakers = _.sortBy(_.filter(locals.data.speakers, 'sermonCount'), 'sermonCount').reverse();
+		next();
 	});
 
 	view.render('index');

@@ -6,7 +6,7 @@ block content
         a(href='/') Sermons
 
     if sermons
-        .container
+        .container-fluid
             .row
                 +sermon-filter(data, filters)
                 .col-md-9
@@ -15,11 +15,27 @@ block content
                             .row
                                 each sermon, index2 in sermons.slice(index, index+3)
                                     .col-md-4
-                                        if sermon.presentation.exists
-                                            img.img-responsive(src=sermon._.presentation.fit(200, 113).replace('.pdf', '.png'))
-                                        else
-                                            img.img-responsive(src='http://sermons.mottramec.co.uk/nopdf.gif')
-                                        .caption
-                                            a(href='/sermon/'+sermon.slug)
-                                                h4
-                                                    =sermon.title
+                                        .panel.panel-default
+                                            .panel-body.text-center
+                                                a(href='/sermon/'+sermon.slug)
+                                                    if sermon.presentation.exists
+                                                        img.img-responsive.center-block(src=sermon._.presentation.fit(250, 163).replace('.pdf', '.png'))
+                                                    else
+                                                        img.img-responsive.center-block(src='http://sermons.mottramec.co.uk/nopdf.gif')
+                                                    .caption
+                                                        h4
+                                                            =sermon.title
+                                            .panel-footer.small.text-center
+                                                ul.list-inline
+                                                    li
+                                                        =sermon._.date.format('DD/MM/YYYY')
+                                                    if sermon.series
+                                                        li
+                                                            a(href='/series/'+ sermon.series.slug)
+                                                                =sermon.series.name
+                                                    li
+                                                        a(href='/speakers/'+ sermon.speaker.key)
+                                                            =sermon.speaker.name.full
+                                                    if sermon.bibleRef
+                                                        li
+                                                            =sermon.bibleRef
