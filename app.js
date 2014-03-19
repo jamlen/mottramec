@@ -7,7 +7,7 @@ var keystone = require('keystone');
 keystone.init({
   
   'name': 'Mottram Evangelical Church',
-  'brand': 'Mottram Evangelical Church',
+  'brand': 'Mottram Evangelical',
   
   'favicon': 'public/favicon.ico',
   'less': 'public',

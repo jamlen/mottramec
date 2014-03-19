@@ -77,8 +77,17 @@ mixin nav
             a(href='http://www.mottramec.co.uk/Mission.htm') Missions
 
   ul.breadcrumb(style="margin-bottom: 5px; margin-top: 10px")
-    li
-      a(href="#") Home
-    li
-      a(href="#") Downloads
-    li.active Sermons
+    for link, i in breadcrumbs
+      if link.active
+        li(class=active)
+          = link.label
+      else
+        li
+          a(href="#") 
+            = link.label
+    else
+      li
+        a(href="#") Home
+      li
+        a(href="#") Downloads
+      li.active Sermones
