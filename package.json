@@ -7,7 +7,8 @@
     "lodash": "latest",
     "async": "~0.2.9",
     "tingodb": "~0.2.1",
-    "tungus": "0.0.2"
+    "newrelic": "~1.5.2",
+    "express-redirect": "~1.1.0"
   },
   "engines": {
     "node": "0.10.x",

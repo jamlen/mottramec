@@ -4,22 +4,22 @@ block content
     if !sermon
         h2 Invalid Sermon
     else
-        h3 
-            a(href='/') DOWNLOADS : Sermons : 
+        h3
+            a(href='/') DOWNLOADS : Sermons :
             a(href=sermon.audio.url)
                 =sermon.title
         if sermon.presentation.exists
             a(href=sermon.presentation.url).sermonImg
                 img(src=sermon._.presentation.fit(200, 113).replace('.pdf', '.png'))
         else
-            img(src='http://sermons.mottramec.co.uk/nopdf.gif')
+            img(src='/images/nopdf.gif')
 
         #sermonDetail
-            a(href='/speakers/'+ sermon.speaker.key) 
+            a(href='/speakers/'+ sermon.speaker.key)
                 =sermon.speaker.name.full
             br
             if sermon.series
-                | Series: 
+                | Series:
                 a(href='/series/'+ sermon.series.slug)
                     =sermon.series.name
                 br
@@ -31,7 +31,7 @@ block content
                 | Audio only
             br
             | Audio:
-            a(href=sermon.audio.url) MP3 
+            a(href=sermon.audio.url) MP3
             | Right click and select "save
             | link as" to download.
             br
@@ -43,7 +43,7 @@ block content
             audio(src=sermon.audio.url, controls='', preload='')
             br
             br
-            | Date: 
+            | Date:
             =sermon._.date.format('DD/MM/YYYY')
             br
             br

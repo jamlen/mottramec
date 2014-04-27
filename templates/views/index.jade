@@ -2,7 +2,7 @@ extends ../layouts/base
 include ../mixins/sermon-filter
 
 block content
-    h3 
+    h3
         a(href='/') DOWNLOADS : Sermons
 
     if sermons
@@ -16,7 +16,7 @@ block content
                                 if sermon.presentation.exists
                                     img(src=sermon._.presentation.fit(200, 113).replace('.pdf', '.png'))
                                 else
-                                    img(src='http://sermons.mottramec.co.uk/nopdf.gif')
+                                    img(src='/images/nopdf.gif')
                         a(href='/sermon/'+sermon.slug)
                             = sermon.title
                         br
@@ -43,7 +43,7 @@ block js
                 obj.dd.on('click', function(event){
                     $(this).toggleClass('active');
                     event.stopPropagation();
-                }); 
+                });
             }
         }
 
@@ -57,4 +57,3 @@ block js
             });
 
         });
-
