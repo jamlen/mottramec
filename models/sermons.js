@@ -20,7 +20,8 @@ Sermon.add({
     audio: { type: Types.S3File, collapse: true, allowedTypes:['audio/mp4', 'audio/mp3'] },
     presentation: { type: Types.CloudinaryImage, collapse: true, allowedTypes:['application/pdf'] },
     studyNotes: { type: Types.S3File, collapse: true, allowedTypes:['application/pdf'] },
-    transcript: { type: Types.Html, wysiwyg: true, collapse: true, height: 400 }
+    transcript: { type: Types.Html, wysiwyg: true, collapse: true, height: 400 },
+    oldId: {type: Number, label: 'ID from old site'}
 });
 
 

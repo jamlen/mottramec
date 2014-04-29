@@ -25,6 +25,9 @@ keystone.init({
   'user model': 'User',
   'cookie secret': config.mottramConfigCookieSecret,
 
+  'ga property': config.mottramConfigGA_PROPERTY,
+  'ga domain': config.mottramConfigGA_DOMAIN,
+
   's3 config': {
     'key'    : config.mottramConfigS3Key,
     'secret' : config.mottramConfigS3Secret,
