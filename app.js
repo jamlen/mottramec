@@ -44,6 +44,18 @@ keystone.init({
 require('./models');
 
 keystone.set('routes', require('./routes'));
+keystone.set('locals', {
+	_: require('lodash'),
+	env: keystone.get('env'),
+	utils: keystone.utils,
+	plural: keystone.utils.plural,
+	editable: keystone.content.editable,
+	ga: {
+        property: keystone.get('ga property'),
+	    domain: keystone.get('ga domain')
+    }
+});
+
 keystone.set('nav', {
   'Sermons': ['sermons', 'series'],
   'Users': ['users', 'user-groups']
