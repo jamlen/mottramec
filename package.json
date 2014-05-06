@@ -7,7 +7,6 @@
     "lodash": "latest",
     "async": "~0.2.9",
     "tingodb": "~0.2.1",
-    "newrelic": "~1.5.2",
     "express-redirect": "~1.1.0"
   },
   "engines": {

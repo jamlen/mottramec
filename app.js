@@ -1,9 +1,6 @@
 var config = require('./config/site');
 if (config === null) throw new Error('Site requires config.');
 
-if (process.env.NODE_ENV == 'production')
-    require('newrelic');
-
 var keystone = require('keystone');
 keystone.init({
 
@@ -24,9 +21,6 @@ keystone.init({
   'auth': true,
   'user model': 'User',
   'cookie secret': config.mottramConfigCookieSecret,
-
-  'ga property': config.mottramConfigGA_PROPERTY,
-  'ga domain': config.mottramConfigGA_DOMAIN,
 
   's3 config': {
     'key'    : config.mottramConfigS3Key,
@@ -51,8 +45,8 @@ keystone.set('locals', {
 	plural: keystone.utils.plural,
 	editable: keystone.content.editable,
 	ga: {
-        property: keystone.get('ga property'),
-	    domain: keystone.get('ga domain')
+        property: config.mottramConfigGA_PROPERTY,
+	    domain: config.mottramConfigGA_DOMAIN
     }
 });
 
