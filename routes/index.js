@@ -26,7 +26,9 @@ keystone.set('500', function(err, req, res, next) {
 
 // Load Routes
 var routes = {
+	api: importRoutes('./api'),
     views: importRoutes('./views'),
+    redirects: importRoutes('./redirects'),
 };
 
 // Bind Routes
@@ -35,11 +37,16 @@ exports = module.exports = function(app) {
     redirect(app);
     app.redirect('/index.php', '/', 301);
     app.redirect('/sermons.php', '/', 301);
+    app.all('/sermon.php', routes.redirects.sermon);
 
     app.get('/', routes.views.index);
     app.get('/sermon/:sermon', routes.views.sermon);
     app.get('/speakers/:speaker', routes.views.index);
     app.get('/series/:series', routes.views.index);
     app.get('/books/:book', routes.views.index);
+
+	// API
+	app.all('/api*', keystone.initAPI);
+	app.all('/api/sermon/:sermon', routes.api.sermon);
 
 }

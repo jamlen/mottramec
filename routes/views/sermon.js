@@ -21,11 +21,10 @@ exports = module.exports = function(req, res) {
                 .limit(1)
                 .populate('series speaker bibleRefs')
                 .exec(function(err, sermon) {
-                    console.log('sermon', sermon);
-                        if (err) return res.err(err);
-                        if (!sermon) return res.notfound('Sermon not found');
-                        locals.sermon = sermon;
-                        next();
+                    if (err) return res.err(err);
+                    if (!sermon) return res.notfound('Sermon not found');
+                    locals.sermon = sermon;
+                    next();
                 });
         } else {
             Sermon.model.findOne()
@@ -33,10 +32,10 @@ exports = module.exports = function(req, res) {
                 .where('slug', locals.filters.sermon)
                 .populate('series speaker bibleRefs')
                 .exec(function(err, sermon) {
-                        if (err) return res.err(err);
-                        if (!sermon) return res.notfound('Sermon not found');
-                        locals.sermon = sermon;
-                        next();
+                    if (err) return res.err(err);
+                    if (!sermon) return res.notfound('Sermon not found');
+                    locals.sermon = sermon;
+                    next();
                 });
         }
     });

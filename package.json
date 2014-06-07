@@ -6,7 +6,6 @@
     "keystone": "latest",
     "lodash": "latest",
     "async": "~0.2.9",
-    "tingodb": "~0.2.1",
     "express-redirect": "~1.1.0"
   },
   "engines": {
