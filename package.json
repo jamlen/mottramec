@@ -13,7 +13,7 @@
     "npm": "1.3.x"
   },
   "scripts": {
-    "start": "web.js"
+    "start": "app.js"
   },
   "bundledDependencies": [
     "keystone"

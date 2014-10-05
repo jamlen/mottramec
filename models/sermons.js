@@ -19,6 +19,7 @@ Sermon.add({
     bibleRefs: { type: Types.Relationship, ref: 'Verse', many: true, label: 'Primary Verses' },
     date: { type: Types.Date, default: Date.now, initial: true, format: 'YYYY-MM-DD' },
     audio: { type: Types.S3File, collapse: true, allowedTypes:['audio/mp4', 'audio/mp3'] },
+    partialRecording: { type: Boolean, label: 'Partial Recording' },
     presentation: { type: Types.CloudinaryImage, collapse: true, allowedTypes:['application/pdf'] },
     studyNotes: { type: Types.S3File, collapse: true, allowedTypes:['application/pdf'] },
     transcript: { type: Types.Html, wysiwyg: true, collapse: true, height: 400 },
