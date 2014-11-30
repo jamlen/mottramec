@@ -19,7 +19,7 @@ exports = module.exports = function(req, res) {
             date: sermon.date,
             series: _.isEmpty(sermon.series) ? null : sermon.series.name,
             speaker: sermon.speaker.name.full,
-            thumbnail: sermon._.presentation.fit(200, 113).replace('.pdf', '.png'),
+            thumbnail: sermon.thumbnail.img,
             url: 'http://' + host + '/sermon/'+sermon.slug
         };
         callback(apiSermon);

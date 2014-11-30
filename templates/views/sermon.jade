@@ -9,8 +9,11 @@ block content
             a(href=sermon.audio.url)
                 =sermon.title
         if sermon.presentation.exists
-            a(href=sermon.presentation.url).sermonImg
-                img(src=sermon._.presentation.fit(200, 113).replace('.pdf', '.png'))
+            if sermon.thumbnail.isPdf
+                a(href=sermon.presentation.url).sermonImg
+                    img(src=sermon.thumbnail.img)
+            else
+                img(src=sermon.thumbnail.img)
         else
             img(src='/images/nopdf.gif')
 
@@ -32,6 +35,7 @@ block content
             br
             | Audio:
             a(href=sermon.audio.url) MP3
+            br
             | Right click and select "save
             | link as" to download.
             if (sermon.partialRecording)
@@ -45,7 +49,7 @@ block content
             audio(src=sermon.audio.url, controls='', preload='')
             br
             br
-            | Date:
+            | Date: 
             =sermon._.date.format('DD/MM/YYYY')
             br
             br

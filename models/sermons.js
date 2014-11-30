@@ -20,7 +20,7 @@ Sermon.add({
     date: { type: Types.Date, default: Date.now, initial: true, format: 'YYYY-MM-DD' },
     audio: { type: Types.S3File, collapse: true, allowedTypes:['audio/mp4', 'audio/mp3'] },
     partialRecording: { type: Boolean, label: 'Partial Recording' },
-    presentation: { type: Types.CloudinaryImage, collapse: true, allowedTypes:['application/pdf'] },
+    presentation: { type: Types.CloudinaryImage, collapse: true, allowedTypes:['application/pdf'], autoCleanup : true },
     studyNotes: { type: Types.S3File, collapse: true, allowedTypes:['application/pdf'] },
     transcript: { type: Types.Html, wysiwyg: true, collapse: true, height: 400 },
     oldId: { type: Number, label: 'ID from old site', hidden: true },
@@ -64,7 +64,12 @@ Sermon.schema.virtual('bibleRef').get(function() {
     }
 });
 
-
+Sermon.schema.virtual('thumbnail').get(function() {
+    return {
+        img: this._.presentation.src({ transformation: 'mottram-thumb'}),
+        isPdf: this.presentation.format.toLowerCase() === 'pdf'
+    };
+});
 
 Sermon.defaultColumns = 'date|11%, title, speaker|15%, series, state|8%';
 Sermon.register();
