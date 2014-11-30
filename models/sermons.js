@@ -10,17 +10,20 @@ var Sermon = new keystone.List('Sermon', {
     defaultSort: '-date',
     drilldown: 'speaker series'
 });
+
 Sermon.add({
     title: { type: String, required: true },
     state: { type: Types.Select, options: 'draft, published, archived', default: 'draft' },
-    speaker: { type: Types.Relationship, ref: 'User'}, //, filters: {groups: true} },
-    series: { type: Types.Relationship, ref: 'Series' },
+    speaker: { type: Types.Relationship, ref: 'User', filters: {groups:'52b4d2a907eb16176a000001'} },
+    series: { type: Types.Relationship, ref: 'Series', width: 'long' },
     bibleRefs: { type: Types.Relationship, ref: 'Verse', many: true, label: 'Primary Verses' },
     date: { type: Types.Date, default: Date.now, initial: true, format: 'YYYY-MM-DD' },
     audio: { type: Types.S3File, collapse: true, allowedTypes:['audio/mp4', 'audio/mp3'] },
-    presentation: { type: Types.CloudinaryImage, collapse: true, allowedTypes:['application/pdf'] },
+    partialRecording: { type: Boolean, label: 'Partial Recording' },
+    presentation: { type: Types.CloudinaryImage, collapse: true, allowedTypes:['application/pdf'], autoCleanup : true },
     studyNotes: { type: Types.S3File, collapse: true, allowedTypes:['application/pdf'] },
-    transcript: { type: Types.Html, wysiwyg: true, collapse: true, height: 400 }
+    transcript: { type: Types.Html, wysiwyg: true, collapse: true, height: 400 },
+    oldId: { type: Number, label: 'ID from old site', hidden: true },
 });
 
 
@@ -53,11 +56,20 @@ Sermon.fields.audio.pre('upload', function(item, file, next) {
 });
 
 Sermon.schema.virtual('bibleRef').get(function() {
-    if (_.any(this.bibleRefs))
+    if (_.any(this.bibleRefs)) {
+        if (this.bibleRefs.length === 1) {
+            return _.first(this.bibleRefs).format;
+        }
         return _.first(this.bibleRefs).format + ' - ' + _.last(this.bibleRefs).format;
+    }
 });
 
-
+Sermon.schema.virtual('thumbnail').get(function() {
+    return {
+        img: this._.presentation.src({ transformation: 'mottram-thumb'}),
+        isPdf: this.presentation.format.toLowerCase() === 'pdf'
+    };
+});
 
 Sermon.defaultColumns = 'date|11%, title, speaker|15%, series, state|8%';
 Sermon.register();

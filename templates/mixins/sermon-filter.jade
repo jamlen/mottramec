@@ -1,7 +1,7 @@
 mixin sermon-filter(data, filter)
-	//- h4 Filter by 
+	//- h4 Filter by
 	if filter.active
-		h5.text-muted 
+		h5.text-muted
 			a(href='/') Clear Filter
 
 	//- if data.series
@@ -12,7 +12,7 @@ mixin sermon-filter(data, filter)
 	//- 					i.fa.fa-bars.fa-fw
 	//- 					= series.name
 	//- 					abbr(title=series.sermonCount+' sermons in '+series.name)
-	//- 						span.count=series.sermonCount	
+	//- 						span.count=series.sermonCount
 
 	//- if data.speakers
 	//- 	#dd.wrapper-dropdown-2 Speaker
