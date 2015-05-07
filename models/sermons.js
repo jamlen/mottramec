@@ -65,6 +65,12 @@ Sermon.schema.virtual('bibleRef').get(function() {
 });
 
 Sermon.schema.virtual('thumbnail').get(function() {
+    if (!this._.presentation.src()) {
+        return {
+            img: null,
+            isPdf: false
+        };
+    }
     return {
         img: this._.presentation.src({ transformation: 'mottram-thumb'}),
         isPdf: this.presentation.format.toLowerCase() === 'pdf'
