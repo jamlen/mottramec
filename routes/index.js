@@ -46,7 +46,7 @@ exports = module.exports = function(app) {
     app.get('/books/:book', routes.views.index);
 
 	// API
-	app.all('/api*', keystone.initAPI);
+	app.all('/api*', keystone.middleware.api);
 	app.all('/api/sermon/:sermon', routes.api.sermon);
 
 }

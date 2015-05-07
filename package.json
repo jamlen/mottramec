@@ -5,7 +5,7 @@
   "dependencies": {
     "keystone": "latest",
     "lodash": "latest",
-    "async": "~0.2.9",
+    "async": "latest",
     "express-redirect": "~1.1.0"
   },
   "engines": {
