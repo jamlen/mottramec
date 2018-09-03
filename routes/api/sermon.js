@@ -4,6 +4,7 @@ var _ = require('lodash');
 var Sermon = keystone.list('Sermon');
 
 exports = module.exports = function(req, res) {
+    var debug = require('debug')('mottramec:sermon');
     var locals = res.locals;
 
     locals.section = 'sermon';
@@ -42,6 +43,7 @@ exports = module.exports = function(req, res) {
     q.exec(function(err, sermon) {
         if (err) return res.apiError(null, err);
         if (!sermon) return res.apiResponse(404);
+        debug('found sermon', sermon);
         projectSermon(sermon, req.headers.host, res.apiResponse);
     });
 }

@@ -3,6 +3,7 @@ var keystone = require('keystone');
 var Sermon = keystone.list('Sermon');
 
 exports = module.exports = function(req, res) {
+    var debug = require('debug')('mottramec:sermon');
 
     var view = new keystone.View(req, res),
         locals = res.locals;
@@ -23,6 +24,7 @@ exports = module.exports = function(req, res) {
                 .exec(function(err, sermon) {
                     if (err) return res.err(err);
                     if (!sermon) return res.notfound('Sermon not found');
+                    debug('found sermon', sermon);
                     locals.sermon = sermon;
                     next();
                 });
@@ -34,6 +36,7 @@ exports = module.exports = function(req, res) {
                 .exec(function(err, sermon) {
                     if (err) return res.err(err);
                     if (!sermon) return res.notfound('Sermon not found');
+                    debug('found sermon', sermon);
                     locals.sermon = sermon;
                     next();
                 });

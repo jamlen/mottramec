@@ -1,8 +1,21 @@
 var keystone = require('keystone'),
+    debug = require('debug')('mottramec:sermon'),
     _ = require('lodash'),
     util = require('util'),
     async = require('async'),
     Types = keystone.Field.Types;
+
+var config = require('../config/site');
+
+var storage = new keystone.Storage({
+    adapter: require('keystone-storage-adapter-s3'),
+    s3: {
+        key: config.mottramConfigS3Key, // required; defaults to process.env.S3_KEY
+        secret: config.mottramConfigS3Secret, // required; defaults to process.env.S3_SECRET
+        bucket: 'mottramec', // required; defaults to process.env.S3_BUCKET
+        //region: 'ap-southeast-2', // optional; defaults to process.env.S3_REGION, or if that's not specified, us-east-1
+    }
+});
 
 var Sermon = new keystone.List('Sermon', {
     autokey: { path: 'slug', from: 'title', unique: true },
@@ -18,16 +31,17 @@ Sermon.add({
     series: { type: Types.Relationship, ref: 'Series', width: 'long' },
     bibleRefs: { type: Types.Relationship, ref: 'Verse', many: true, label: 'Primary Verses' },
     date: { type: Types.Date, default: Date.now, initial: true, format: 'YYYY-MM-DD' },
-    audio: { type: Types.S3File, collapse: true, allowedTypes:['audio/mp4', 'audio/mp3'] },
+    audio: { type: Types.File, storage: storage, collapse: true, allowedTypes:['audio/mp4', 'audio/mp3'] },
     partialRecording: { type: Boolean, label: 'Partial Recording' },
     presentation: { type: Types.CloudinaryImage, collapse: true, allowedTypes:['application/pdf'], autoCleanup : true },
-    studyNotes: { type: Types.S3File, collapse: true, allowedTypes:['application/pdf'] },
+    studyNotes: { type: Types.File, storage: storage, collapse: true, allowedTypes:['application/pdf'] },
     transcript: { type: Types.Html, wysiwyg: true, collapse: true, height: 400 },
     oldId: { type: Number, label: 'ID from old site', hidden: true },
 });
 
 
 Sermon.fields.audio.pre('upload', function(item, file, next) {
+    debug('pre:upload', item, file);
     var exec = require('child_process').exec;
     var fmt = 'id3v2 --artist "Mottram Evangelical Church" --TCOM "%s" --album "MEC - %s" -y %d -t "%s" -g 101 --TCOP "Copyright 2013 Mottram Evangelical Church" %s';
 
@@ -56,7 +70,7 @@ Sermon.fields.audio.pre('upload', function(item, file, next) {
 });
 
 Sermon.schema.virtual('bibleRef').get(function() {
-    if (_.any(this.bibleRefs)) {
+    if (_.some(this.bibleRefs)) {
         if (this.bibleRefs.length === 1) {
             return _.first(this.bibleRefs).format;
         }

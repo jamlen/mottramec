@@ -12,7 +12,7 @@ keystone.init({
   'static': 'public',
 
   'views': 'templates/views',
-  'view engine': 'jade',
+  'view engine': 'pug',
 
   'auto update': true,
   'mongo': 'mongodb://'+ (config.mottramConfigMongoCon || 'localhost')+'/mottramec',
@@ -47,7 +47,7 @@ keystone.set('locals', {
 	ga: {
         property: config.mottramConfigGA_PROPERTY,
 	    domain: config.mottramConfigGA_DOMAIN
-    }
+  },
 });
 
 keystone.set('nav', {
