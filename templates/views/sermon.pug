@@ -4,9 +4,10 @@ block content
     if !sermon
         h2 Invalid Sermon
     else
+        -var audio = JSON.parse(JSON.stringify(sermon.audio));
         h3
             a(href='/') DOWNLOADS : Sermons : 
-            a(href=sermon.audio.url)
+            a(href=audio.url)
                 =sermon.title
         if sermon.presentation.exists
             if sermon.thumbnail.isPdf
@@ -23,7 +24,7 @@ block content
             br
             if sermon.series
                 | Series:
-                a(href='/series/'+ sermon.series.slug)
+                a(href=`/series/${sermon.series.slug}`)
                     =sermon.series.name
                 br
             br
@@ -34,7 +35,8 @@ block content
                 | Audio only
             br
             | Audio:
-            a(href=sermon.audio.url) MP3
+            a(href=`${audio.url}`, download=audio.originalname)
+              | MP3
             br
             | Right click and select "save
             | link as" to download.
@@ -46,7 +48,7 @@ block content
                 a(href=sermon.studyNotes.url) PDF
                 br
             br
-            audio(src=sermon.audio.url, controls='', preload='')
+            audio(src=`${audio.url}`, controls='', preload='')
             br
             br
             | Date: 
