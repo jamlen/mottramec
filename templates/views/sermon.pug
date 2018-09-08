@@ -6,7 +6,7 @@ block content
     else
         -var audio = JSON.parse(JSON.stringify(sermon.audio));
         h3
-            a(href='/') DOWNLOADS : Sermons : 
+            a(href='/') DOWNLOADS : Sermons :
             a(href=audio.url)
                 =sermon.title
         if sermon.presentation.exists

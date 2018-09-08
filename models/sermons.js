@@ -57,7 +57,7 @@ Sermon.fields.audio.pre('upload', function(item, file, next) {
             });
         }
     }, function(err, results){
-        var cmd = util.format(fmt, results.speaker.name.full, results.series.name, item._.date.format('YYYY'), item.title, file.path);
+        var cmd = util.format(fmt, results.speaker.name.full, results.series.name ? results.series.name : 'Guest Speakers', item._.date.format('YYYY'), item.title, file.path);
         console.log('Updating ID3 tags.', cmd);
         exec(cmd, function(err, stdout, stderr){
             console.log(stdout, stderr);

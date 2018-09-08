@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "async": "latest",
+    "bible-passage-reference-parser": "^2.0.1",
     "debug": "^3.1.0",
     "express-redirect": "~1.1.0",
     "keystone-storage-adapter-s3": "^2.0.0",

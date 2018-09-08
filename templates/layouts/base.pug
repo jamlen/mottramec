@@ -23,24 +23,23 @@ html(lang='en')
         block css
         block head
     body
+        .container
+            #pagewidth
+                #header
+                +nav
 
-        //- .container
-        #pagewidth
-            #header
-            +nav
+                block intro
 
-            block intro
+                +flash-messages(messages)
 
-            +flash-messages(messages)
-
-            #wrapper.clearfix
+                //- #wrapper.clearfix
                 #maincol
                     block content
 
-            p.registered
-                | MOTTRAM EVANGELICAL CHURCH IS A COMPANY LIMITED BY GUARANTEE (NUMBER 6856759) AND A REGISTERED CHARITY (NUMBER 1129418) Copyright
-                a(href='http://www.mottramec.co.uk/copywrite.html')
-                    | &copy; 2014 Mottram Evangelical Church
+                p.registered
+                    | MOTTRAM EVANGELICAL CHURCH IS A COMPANY LIMITED BY GUARANTEE (NUMBER 6856759) AND A REGISTERED CHARITY (NUMBER 1129418) Copyright
+                    a(href='http://www.mottramec.co.uk/copywrite.html')
+                        | &copy; 2014 Mottram Evangelical Church
 
     script(src='https://code.jquery.com/jquery.js')
     script(src='/js/bootstrap.min.js')
