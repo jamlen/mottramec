@@ -13,6 +13,13 @@ exports.initLocals = function(req, res, next) {
 
     // Add your own local variables here
 
+    //TODO use req.url to build breadcrumbs
+    locals.breadcrumbs = [
+        {label: 'Home', link: '/'},
+        {label: 'Downloads', link: '#'},
+        {label: 'Sermons', link: '/', active: true}
+    ];
+
     next();
 
 };

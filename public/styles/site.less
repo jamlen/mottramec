@@ -25,7 +25,7 @@ html, body{
 	margin:0 auto;
 	overflow: hidden;
 } 
-#result div{
+#result .panel{
 	border: 5px solid #EEEEEE;
 	float: left;
 	height: 225px;
@@ -45,6 +45,22 @@ html, body{
 	width: 1000px;
 	padding: 5px;
 	text-align: center;
+  box-sizing: content-box;
+}
+.panel .panel-footer li {
+    overflow: hidden;
+    text-overflow: ellipsis; 
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+}
+.panel h4 {
+    overflow: hidden;
+    text-overflow: ellipsis; 
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    margin-top: -0.5em;
 }
 a:link, a:visited{
 	color:#C30;
@@ -62,6 +78,7 @@ a:hover{
 	position: relative;
 	width: 725px;
 	margin-left: 10px;
+  border: solid azure;
 }
 .sermonImg{
 	float:left

@@ -5,54 +5,40 @@ block content
         h2 Invalid Sermon
     else
         -var audio = JSON.parse(JSON.stringify(sermon.audio));
-        h3
-            a(href='/') DOWNLOADS : Sermons :
-            a(href=audio.url)
-                =sermon.title
-        if sermon.presentation.exists
-            if sermon.thumbnail.isPdf
-                a(href=sermon.presentation.url).sermonImg
-                    img(src=sermon.thumbnail.img)
-            else
-                img(src=sermon.thumbnail.img)
-        else
-            img(src='/images/nopdf.gif')
-
-        #sermonDetail
-            a(href='/speakers/'+ sermon.speaker.key)
-                =sermon.speaker.name.full
-            br
-            if sermon.series
-                | Series:
-                a(href=`/series/${sermon.series.slug}`)
-                    =sermon.series.name
-                br
-            br
-            | Visual:
-            if sermon.presentation.exists
-                a(href=sermon.presentation.url) PDF
-            else
-                | Audio only
-            br
-            | Audio:
-            a(href=`${audio.url}`, download=audio.originalname)
-              | MP3
-            br
-            | Right click and select "save
-            | link as" to download.
-            if (sermon.partialRecording)
-                h3 Only a partial recording.
-            br
-            if (sermon.studyNotes.exists)
-                | Sermon Notes:
-                a(href=sermon.studyNotes.url) PDF
-                br
-            br
-            audio(src=`${audio.url}`, controls='', preload='')
-            br
-            br
-            | Date: 
-            =sermon._.date.format('DD/MM/YYYY')
-            br
-            br
-            p
+        #sermonDetail.row
+            .col-md-8
+                dl.dl-horizontal
+                    dt Title
+                    dd=sermon.title
+                    dt Speaker
+                    dd
+                        a(href='/speakers/'+ sermon.speaker.key) 
+                            =sermon.speaker.name.full
+                    if sermon.series
+                        dt Series
+                        dd
+                            a(href='/series/'+ sermon.series.slug)
+                                =sermon.series.name
+                    dt Presentation
+                        dd
+                            if sermon.presentation.exists
+                                a(href=sermon.presentation.url) PDF
+                            else
+                                | Audio only
+                    dt Audio
+                        dd
+                            a(href=`${audio.url}`) MP3 
+                            | - Right click and select "save
+                            | link as" to download.
+                    if (sermon.studyNotes.exists)
+                        dt Sermon Notes
+                        dd
+                            a(href=sermon.studyNotes.url) PDF
+                    dt Date
+                    dd=sermon._.date.format('DD/MM/YYYY')
+                audio(src=`${audio.url}`, controls='', preload='')
+            .col-md-4
+                if sermon.presentation.exists
+                    img.img-responsive.center-block(src=sermon._.presentation.fit(250, 163).replace('.pdf', '.png'))
+                else
+                    img.img-responsive.center-block(src='/images/nopdf.gif')

@@ -16,9 +16,12 @@
     "npm": "1.3.x"
   },
   "scripts": {
-    "start": "app.js"
+    "start": "node app.js"
   },
   "bundledDependencies": [
     "keystone"
-  ]
+  ],
+  "devDependencies": {
+    "less": "^3.8.1"
+  }
 }

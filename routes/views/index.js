@@ -86,8 +86,12 @@ exports = module.exports = function(req, res) {
         }
     };
 
+    var speakers = keystone.list('UserGroup').model.findOne({name: 'Speakers'});
     view.query('serieses', keystone.list('Series').model.find());
-    view.query('speakers', keystone.list('User').model.find({groups: '52b4d2a907eb16176a000001'}));
+    // view.query('speakers', keystone.list('User').model.find({groups: '52b4d2a907eb16176a000001'}));
+    view.query('speakers', keystone.list('User').model
+               .find({groups: speakers._id, sermons: {$gt:[]}})
+               .populate('UserGroup Sermon'));
 
     //find the object to filter from
     view.on('init', function(next) {

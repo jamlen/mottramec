@@ -2,60 +2,41 @@ extends ../layouts/base
 include ../mixins/sermon-filter
 
 block content
-    h3
+
+  .container-fluid
+    .row
+      h3
         a(href='/') DOWNLOADS : Sermons
-
-    if sermons
-        .row
-            +sermon-filter(data, filters)
-        .row
-            #sermonP
-                each sermon in sermons
-                    #result
-                        div
-                            p
-                                a(href='/sermon/'+sermon.slug)
-                                    if sermon.presentation.exists
-                                        img(src=sermon.thumbnail.img)
-                                    else
-                                        img(src='/images/nopdf.gif')
-                            a(href='/sermon/'+sermon.slug)
-                                = sermon.title
-                            br
-                            if sermon.series
-                                = sermon.series.name
-                                br
-                            if sermon.bibleRef
-                                = sermon.bibleRef
-                                br
-                            = sermon._.date.format('DD/MM/YYYY')
-                            br
-                            = sermon.speaker.name.full
-
-block js
-    script.
-        function DropDown(el) {
-            this.dd = el;
-            this.initEvents();
-        }
-        DropDown.prototype = {
-            initEvents : function() {
-                var obj = this;
-
-                obj.dd.on('click', function(event){
-                    $(this).toggleClass('active');
-                    event.stopPropagation();
-                });
-            }
-        }
-
-        $(function() {
-
-            var dd = new DropDown( $('.wrapper-dropdown-2') );
-
-            $(document).click(function() {
-                // all dropdowns
-                $('.wrapper-dropdown-2').removeClass('active');
-            });
-
-        });
+    .row
+      //- .col-md-2
+      //-   +sermon-filter(data, filters)
+      .col-md
+        each sermon, index in sermons
+          if (index % 4 == 0)
+            #sermonP.row
+              each sermon, index2 in sermons.slice(index, index+4)
+                #result.col-md-3
+                  .panel.panel-default
+                    .panel-body.text-center
+                      a(href='/sermon/'+sermon.slug)
+                        if sermon.presentation.exists
+                          img.img-responsive.center-block(src=sermon._.presentation.fit(250, 163).replace('.pdf', '.png'))
+                        else
+                          img.img-responsive.center-block(src='/images/nopdf.gif')
+                        .caption
+                          h4
+                            =sermon.title
+                    .panel-footer.small.text-center
+                      ul.list-inline
+                        li
+                          =sermon._.date.format('DD/MM/YYYY')
+                        if sermon.series
+                          li
+                            a(href='/series/'+ sermon.series.slug)
+                              =sermon.series.name
+                        li
+                          a(href='/speakers/'+ sermon.speaker.key)
+                            =sermon.speaker.name.full
+                        if sermon.bibleRef
+                          li
+                            =sermon.bibleRef
