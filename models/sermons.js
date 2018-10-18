@@ -31,7 +31,7 @@ Sermon.add({
     series: { type: Types.Relationship, ref: 'Series', width: 'long' },
     bibleRefs: { type: Types.Relationship, ref: 'Verse', many: true, label: 'Primary Verses' },
     date: { type: Types.Date, default: Date.now, initial: true, format: 'YYYY-MM-DD' },
-    audio: { type: Types.File, storage: storage, collapse: true, allowedTypes:['audio/mp4', 'audio/mp3'] },
+    audio: { type: Types.File, storage: storage, collapse: true, allowedTypes:['audio/mp4', 'audio/mp3', 'audio/mpeg'] },
     partialRecording: { type: Boolean, label: 'Partial Recording' },
     presentation: { type: Types.CloudinaryImage, collapse: true, allowedTypes:['application/pdf'], autoCleanup : true },
     studyNotes: { type: Types.File, storage: storage, collapse: true, allowedTypes:['application/pdf'] },
