@@ -15,7 +15,7 @@ keystone.init({
   'view engine': 'jade',
 
   'auto update': true,
-  'mongo': 'mongodb://'+ (config.mottramConfigMongoCon || 'localhost')+'/mottramec',
+  'mongo': config.mottramConfigMongoCon || 'localhost/mottramec',
 
   'session': true,
   'auth': true,
